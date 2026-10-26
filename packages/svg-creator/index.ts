@@ -23,6 +23,7 @@ export type DrawOptions = {
   sizeCell: number;
   sizeDot: number;
   sizeDotBorderRadius: number;
+  snakeLength?: number;
   dark?: {
     colorDots: Record<Color, string>;
     colorEmpty: string;
@@ -90,7 +91,14 @@ export const createSvg = (
       (grid.height + 2) * drawOptions.sizeCell,
       duration,
     ),
-    createSnake(chain, drawOptions, duration),
+    createSnake(
+      chain,
+      drawOptions,
+      duration,
+      livingCells.flatMap((c) =>
+        c.t === null ? [] : [Math.round(c.t * chain.length)],
+      ),
+    ),
   ];
 
   const viewBox = [

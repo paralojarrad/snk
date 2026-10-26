@@ -52,6 +52,10 @@ export const parseEntry = (entry: string) => {
     drawOptions.colorEmpty = colors[0];
   }
   if (sp.has("color_snake")) drawOptions.colorSnake = sp.get("color_snake")!;
+  if (sp.has("snake_length")) {
+    const n = parseInt(sp.get("snake_length")!, 10);
+    if (Number.isFinite(n) && n > 0) drawOptions.snakeLength = n;
+  }
   if (sp.has("color_background"))
     drawOptions.colorBackground = sp.get("color_background")!;
   if (sp.has("color_dot_border"))

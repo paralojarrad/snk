@@ -44,3 +44,15 @@ for (const [key, grid] of Object.entries(grids))
 
     fs.writeFileSync(path.resolve(dir, key + ".svg"), svg);
   });
+
+it("should add tail segments when snakeLength exceeds the base length (3 in this fixture)", () => {
+  const grid = Object.values(grids)[0];
+  const chain = [snake, ...getBestRoute(grid, snake)!];
+  const count = (o: DrawOptions) =>
+    createSvg(grid, null, chain, o, animationOptions).match(/class="s s\d+"/g)!
+      .length;
+
+  expect(count(drawOptions)).toBe(3);
+  expect(count({ ...drawOptions, snakeLength: 12 })).toBe(12);
+  expect(count({ ...drawOptions, snakeLength: 2 })).toBe(3);
+});
